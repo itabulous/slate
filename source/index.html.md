@@ -1,10 +1,12 @@
 ---
-title: API Reference
+title: Ledge Link API Reference
 
 language_tabs:
   - shell
-  - ruby
   - python
+  - java
+  - objective-c
+  - swift
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -18,7 +20,7 @@ search: true
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Ledge Link API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
 
 We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
@@ -57,6 +59,77 @@ Kittn expects for the API key to be included in all API requests to the server i
 <aside class="notice">
 You must replace <code>meowmeowmeow</code> with your personal API key.
 </aside>
+
+# Config
+
+## Available Loan Purposes
+
+> To get the list of available loan purposes, use this code:
+
+```shell
+curl -X POST http://localhost:8080/config/loanPurposes
+  -d '{"developer_id":"meowmeowmeow"}'
+  -H "Content-Type: application/json"
+  
+# Make sure to replace `meowmeowmeow` with your developer id.
+# The above command returns JSON structured like this:
+
+{
+  "loan_purposes": 
+  [
+    {
+	  "loan_purpose_id": 1, 
+	  "description": "Debt Consolidation"
+    }, 
+	{
+	  "loan_purpose_id": 2, 
+	  "description": "Home Improvement"
+    }	
+  ]
+}
+```
+
+```swift
+import LedgeLink
+
+let manager = LedgeLink.defaultManager()
+manager.initializeWithDeveloperId("meowmeowmeow", sandbox: false)
+manager.offerPurposesList { result in
+  switch result {
+    case .Failure(let error):
+	  // Your error handler here
+      break
+    case .Success(let purposes):
+	  // Your data handler here
+      break
+    }
+}
+
+# Make sure to replace `meowmeowmeow` with your developer id.
+# Your data handler will receive a list of objects of type LoanPurpose:
+
+Property | Description
+--------- | -----------
+loanPurposeId | The loan purpose id
+description | The loan purpose's text that should be shown to the user
+
+
+```
+
+This endpoint retrieves the list of available loan purposes that can be used.
+
+<aside class="notice">Only the loan purposes defined here will be accepted by the link api.</aside>
+
+### HTTP Request
+
+`POST http://link.ledge.me/config/loanPurposes`
+
+### POST Parameters
+
+Parameter | Description
+--------- | -----------
+developer_id | Your developer Id
+
 
 # Kittens
 
@@ -165,4 +238,3 @@ This endpoint retrieves a specific kitten.
 Parameter | Description
 --------- | -----------
 ID | The ID of the kitten to retrieve
-
