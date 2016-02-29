@@ -30,8 +30,6 @@ As a developer, you can integrate Link via the REST API or through our SDKs (ava
 
 The Link API is architected around REST, using standard HTTP verbs to communicate and HTTP response codes to indicate status and errors. All responses come in standard JSON. The Link API is served over HTTPS to ensure data privacy; HTTP is not supported. Every request must include your developer_id.
 
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
-
 # Authentication
 
 > To authorize, use this code:
