@@ -28,7 +28,7 @@ Link is the first natively mobile loan affiliate network, enabling you to introd
 
 As a developer, you can integrate Link via the REST API or through our SDKs (available for [Android](https://ledge.me/link/android) and [iOS](https://ledge.me/link/ios).  The Link SDKs include drop-in native modules that handle all data capture, input validation, and required disclosures for processing offers and/or applications.  These modules can be easily customized to match your brand, with global config values for modifying fonts, colors, and other stylistic elements. 
 
-The Link API is architected around REST, using standard HTTP verbs to communicate and HTTP response codes to indicate status and errors. All responses come in standard JSON. The Link API is served over HTTPS to ensure data privacy; HTTP is not supported. Every request must include your developer_id.
+The Link API is architected around REST, using standard HTTP verbs to communicate and HTTP response codes to indicate status and errors. All responses come in standard JSON. The Link API is served over HTTPS to ensure data privacy; HTTP is not supported. Every request must include your `developer_id`.
 
 # Authentication
 
@@ -114,6 +114,18 @@ The Loan Purposes endpoint returns a list of valid loan purposes and should be c
 Parameter | Description
 --------- | -----------
 developer_id | Your developer Id
+
+#Users
+
+TO-DO
+
+#Offers
+
+TO-DO
+
+#Applications
+
+TO-DO
 
 #*EXAMPLE STUFF*
 
