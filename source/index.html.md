@@ -43,6 +43,29 @@ Developer authentication is required to access any of the Link API endpoints, an
 
 You can register for a developer ID [here](https:link.ledge.me/register).
 
+#Users
+### HTTP Request
+
+`POST https://link.ledge.me/user/create`
+
+### POST Parameters
+
+Parameter | Description
+--------- | -----------
+first_name*|str
+last_name*|str
+birthdate*|Birthday in format MM-DD-YYYY
+ssn*|9 Digit SSN. XXX-XX-XXXX
+email*|str
+phone_number*|Phone number in E164 format. ex. +1 333-444-5555
+income*|Numeric input truncated to two decimal places. 10.001 would become 10.00.
+street*|str
+apt|str
+city*|str
+state*|US State 2 letter abbreviation.
+zip_code*|str
+developer_id*|int
+
 # Config
 
 Ledge provides various endpoints to populate user input fields that contain a pre-defined list of options.  These config endpoints are already integrated into the drop-in modules included with the Link SDKs; however, if you are building your own custom UI, it is important to integrate the config endpoints appropriately.
@@ -107,23 +130,51 @@ The Loan Purposes endpoint returns a list of valid loan purposes and should be c
 
 ### HTTP Request
 
-`POST http://link.ledge.me/config/loanPurposes`
+`POST https://link.ledge.me/config/loanPurposes`
+
+#Offers
+
+### HTTP Request
+
+`POST https://link.ledge.me/offer/requestOffers`
 
 ### POST Parameters
 
 Parameter | Description
 --------- | -----------
-developer_id | Your developer Id
+loan_amount*|Numeric input truncated to two decimal places. 10.001 would become 10.00.
+loan_purpose_id*| See CONFIG #TODO: link
+credit_range*| 1 = Excellent Credit (760+), 2 = Good Credit (700+), 3 = Fair Credit (640+), 4 = Poor Credit
+currency|Three digit currency string. "USD" is only supported currency. <i>(default=USD)</i>
+rows|int <i>(default=10)</i>
 
-#Users
+### HTTP Request
 
-TO-DO
+`POST https://link.ledge.me/offer/getOffers/{offer_request_id}`
 
-#Offers
+### POST Parameters
 
-TO-DO
+Parameter | Description
+--------- | -----------
+offer_request_id*|int
+page|int <i>(default=0)</i>
+rows|int <i>(default=10)</i>
 
 #Applications
+
+### HTTP Request
+
+`POST https://link.ledge.me/loan/apply/{offer_id}`
+
+### POST Parameters
+
+Parameter | Description
+--------- | -----------
+offer_id*|int 
+bank_name*|str 
+account_holder_name*|str
+account_number*|Any numeric input of digits. ex. 010101
+routing_number*|Any numeric input of digits. ex. 010101
 
 TO-DO
 
