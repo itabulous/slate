@@ -30,9 +30,22 @@ As a developer, you can integrate Link via the REST API or through our SDKs (ava
 
 The Link API is architected around REST, using standard HTTP verbs to communicate and HTTP response codes to indicate status and errors. All responses come in standard JSON. The Link API is served over HTTPS to ensure data privacy; HTTP is not supported. Every request must include your developer_id.
 
-# Authorization
+# Authentication
+
+There are two types of authentication within the Link API:
+
+1. Developer authentication
+2. User authentication (via the User endpoint)
+
+This section explains how to authenticate as a Link developer in order to create users, return offers, and submit applications on the Link network.
+
+Developer authentication is required to access any of the Link API endpoints, and each endpoint requires a **developer_id** be passed as a POST parameter with all requests.
+
+You can register for a developer ID [here](https:link.ledge.me/register).
 
 # Config
+
+Ledge 
 
 ## Available Loan Purposes
 
@@ -102,7 +115,7 @@ Parameter | Description
 --------- | -----------
 developer_id | Your developer Id
 
-EXAMPLE STUFF
+#*EXAMPLE STUFF*
 
 # Kittn Authentication
 
