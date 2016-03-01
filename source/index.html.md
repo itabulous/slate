@@ -39,13 +39,13 @@ There are two types of authentication within the Link API:
 
 This section explains how to authenticate as a Link developer in order to create users, return offers, and submit applications on the Link network.
 
-Developer authentication is required to access any of the Link API endpoints, and each endpoint requires a **developer_id** be passed as a POST parameter with all requests.
+Developer authentication is required to access any of the Link API endpoints, and each endpoint requires a `developer_id` be passed as a POST parameter with all requests.
 
 You can register for a developer ID [here](https:link.ledge.me/register).
 
 # Config
 
-Ledge 
+Ledge provides various endpoints to populate user input fields that contain a pre-defined list of options.  These config endpoints are already integrated into the drop-in modules included with the Link SDKs; however, if you are building your own custom UI, it is important to integrate the config endpoints appropriately.
 
 ## Available Loan Purposes
 
@@ -101,7 +101,7 @@ description | The loan purpose's text that should be shown to the user
 
 ```
 
-This endpoint retrieves the list of available loan purposes that can be used.
+The Loan Purposes endpoint returns a list of valid loan purposes and should be called prior to sending an offer request to the get_offers endpoint.  In the default interface included with the Link SDK, the loan purpose selector is displayed on the same screen as loan amount.
 
 <aside class="notice">Only the loan purposes defined here will be accepted by the link api.</aside>
 
