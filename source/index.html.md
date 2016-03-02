@@ -45,15 +45,41 @@ You can register for a developer ID [here](https:link.ledge.me/register).
 
 #Users
 
-### HTTP Request
+## Create User
+
+> <h3 class="toc-ignore">Definition:</h3>
+
+> POST https://link.ledge.me/user/create
+
+> <h3 class="toc-ignore">Request:</h3>
 
 ```shell
 curl -X POST https://link.ledge.me/user/create
  -H "Content-Type: application/json"
- -d '{"first_name": "", "street": "", "developer_id": 1, "zip_code": "", "ssn": "", "last_name": "", "email": "", "birthdate": "", "income": "", "apt": "", "phone_number": "", "state": "", "city": ""}'
+ -d '{
+    "state": "",
+    "apt": "",
+    "last_name": "",
+    "developer_id": 1,
+    "city": "",
+    "first_name": "",
+    "zip_code": "",
+    "ssn": "",
+    "income": "",
+    "street": "",
+    "birthdate": "",
+    "phone_number": "",
+    "email": ""
+}'
 ```
 
-`POST https://link.ledge.me/user/create`
+> <h3 class="toc-ignore">Response</h3>
+
+```json
+{
+    "token": "example_user_token"
+}
+```
 
 ### POST Parameters
 
@@ -67,284 +93,160 @@ email*|str
 phone_number*|Phone number in E164 format. ex. +1 333-444-5555
 income*|Numeric input truncated to two decimal places. 10.001 would become 10.00.
 street*|str
-apt|str
+apt|str <i>(default=)</i>
 city*|str
 state*|US State 2 letter abbreviation.
 zip_code*|str
 developer_id*|int
 
-# Config
+#Config
 
-Ledge provides various endpoints to populate user input fields that contain a pre-defined list of options.  These config endpoints are already integrated into the drop-in modules included with the Link SDKs; however, if you are building your own custom UI, it is important to integrate the config endpoints appropriately.
+## Loan Purposes List
 
-## Available Loan Purposes
+> <h3 class="toc-ignore">Definition:</h3>
 
-### HTTP Request
+> POST https://link.ledge.me/config/loanPurposes
+
+> <h3 class="toc-ignore">Request:</h3>
 
 ```shell
 curl -X POST https://link.ledge.me/config/loanPurposes
  -H "Content-Type: application/json"
  -H "Authorization: Bearer {user_token}"
-# Make sure to replace `meowmeowmeow` with your developer id.
-# The above command returns JSON structured like this:
+```
+
+> <h3 class="toc-ignore">Response</h3>
+
+```json
 {
-  "loan_purposes": 
-  [
-    {
-	  "loan_purpose_id": 1, 
-	  "description": "Debt Consolidation"
-    }, 
-	{
-	  "loan_purpose_id": 2, 
-	  "description": "Home Improvement"
-    }	
-  ]
+    "type": "list",
+    "data": [
+        {
+            "type": "loan_purpose",
+            "loan_purpose_id": 1,
+            "description": "Debt Consolidation"
+        },
+        {
+            "type": "loan_purpose",
+            "loan_purpose_id": 2,
+            "description": "Home Improvement"
+        },
+        ...
+    ],
+    "page": 0,
+    "has_more": false,
+    "total_count": 17
 }
 ```
-
-`POST https://link.ledge.me/config/loanPurposes`
-
-
-> To get the list of available loan purposes, use this code:
-
-
-```swift
-import LedgeLink
-
-let manager = LedgeLink.defaultManager()
-manager.initializeWithDeveloperId("meowmeowmeow", sandbox: false)
-manager.offerPurposesList { result in
-  switch result {
-    case .Failure(let error):
-	  // Your error handler here
-      break
-    case .Success(let purposes):
-	  // Your data handler here
-      break
-    }
-}
-
-# Make sure to replace `meowmeowmeow` with your developer id.
-# Your data handler will receive a list of objects of type LoanPurpose:
-
-Property | Description
---------- | -----------
-loanPurposeId | The loan purpose id
-description | The loan purpose's text that should be shown to the user
-```
-
-The Loan Purposes endpoint returns a list of valid loan purposes and should be called prior to sending an offer request to the get_offers endpoint.  In the default interface included with the Link SDK, the loan purpose selector is displayed on the same screen as loan amount.
-
-<aside class="notice">Only the loan purposes defined here will be accepted by the link api.</aside>
 
 #Offers
+## Request Offers
 
-### HTTP Request
+> <h3 class="toc-ignore">Definition:</h3>
+
+> POST https://link.ledge.me/offer/requestOffers
+
+> <h3 class="toc-ignore">Request:</h3>
 
 ```shell
 curl -X POST https://link.ledge.me/offer/requestOffers
  -H "Content-Type: application/json"
  -H "Authorization: Bearer {user_token}"
- -d '{"loan_purpose_id": "", "credit_range": "", "currency": "", "rows": 1, "loan_amount": ""}'
+ -d '{
+    "rows": 1,
+    "loan_purpose_id": "",
+    "credit_range": "",
+    "currency": "",
+    "loan_amount": ""
+}'
 ```
 
-`POST https://link.ledge.me/offer/requestOffers`
+> <h3 class="toc-ignore">Response</h3>
+
+```json
+{
+    "type": "offer_request",
+    "offers": {
+        "type": "list",
+        "data": [
+            {
+                "type": "offer",
+                "id": 243192625,
+                "lender": {
+                    "type": "lender",
+                    "lender_name": "Ninja Loans",
+                    "small_image": null,
+                    "large_image": null,
+                    "about": null
+                },
+                "currency": "USD",
+                "loan_amount": 2500.01,
+                "payment_amount": 264.53,
+                "interest_rate": 6,
+                "payment_count": 10,
+                "term": {
+                    "type": "term",
+                    "duration": 10,
+                    "unit": 2
+                },
+                "expiration_date": 1457110794,
+                "application_method": "api"
+            },
+            ...
+        ],
+        "page": 0,
+        "has_more": false,
+        "total_count": 2
+    },
+    "offer_request_id": 1019824392
+}
+```
 
 ### POST Parameters
 
 Parameter | Description
 --------- | -----------
-loan_amount*|Numeric input truncated to two decimal places. 10.001 would become 10.00.
-loan_purpose_id*| See CONFIG #TODO: link
-credit_range*| 1 = Excellent Credit (760+), 2 = Good Credit (700+), 3 = Fair Credit (640+), 4 = Poor Credit
 currency|Three digit currency string. "USD" is only supported currency. <i>(default=USD)</i>
+loan_amount*|Numeric input truncated to two decimal places. 10.001 would become 10.00.
+loan_purpose_id*| see #Config TODO...
+credit_range*|1 = Excellent Credit (760+), 2 = Good Credit (700+), 3 = Fair Credit (640+), 4 = Poor Credit
 rows|int <i>(default=10)</i>
-
-
-### HTTP Request
-
-```shell
-curl -X POST https://link.ledge.me/offer/getOffers/{offer_request_id}
- -H "Content-Type: application/json"
- -H "Authorization: Bearer {user_token}"
- -d '{"page": 1, "rows": 1}'
-```
-
-`POST https://link.ledge.me/offer/getOffers/{offer_request_id}`
-
-### POST Parameters
-
-Parameter | Description
---------- | -----------
-offer_request_id*|int
-page|int <i>(default=0)</i>
-rows|int <i>(default=10)</i>
-
 
 #Applications
 
-### HTTP Request
+## Apply for Loan
+
+> <h3 class="toc-ignore">Definition:</h3>
+
+> POST https://link.ledge.me/loan/apply/{offer_id}
+
+> <h3 class="toc-ignore">Request:</h3>
 
 ```shell
 curl -X POST https://link.ledge.me/loan/apply/{offer_id}
  -H "Content-Type: application/json"
  -H "Authorization: Bearer {user_token}"
- -d '{"bank_name": "", "account_holder_name": "", "account_number": "", "routing_number": ""}'
+ -d '{
+        "bank_name": "",
+        "routing_number": "",
+        "account_number": "",
+        "account_holder_name": ""
+}'
 ```
 
-`POST https://link.ledge.me/loan/apply/{offer_id}`
+> <h3 class="toc-ignore">Response</h3>
+
+```json
+{}
+```
 
 ### POST Parameters
 
 Parameter | Description
 --------- | -----------
-offer_id*|int 
-bank_name*|str 
+offer_id*|int
+bank_name*|str
 account_holder_name*|str
 account_number*|Any numeric input of digits. ex. 010101
 routing_number*|Any numeric input of digits. ex. 010101
 
-
-#*EXAMPLE STUFF*
-
-# Kittn Authentication
-
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
