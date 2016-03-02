@@ -44,7 +44,14 @@ Developer authentication is required to access any of the Link API endpoints, an
 You can register for a developer ID [here](https:link.ledge.me/register).
 
 #Users
+
 ### HTTP Request
+
+```shell
+curl -X POST https://link.ledge.me/user/create
+ -H "Content-Type: application/json"
+ -d '{"first_name": "", "street": "", "developer_id": 1, "zip_code": "", "ssn": "", "last_name": "", "email": "", "birthdate": "", "income": "", "apt": "", "phone_number": "", "state": "", "city": ""}'
+```
 
 `POST https://link.ledge.me/user/create`
 
@@ -66,12 +73,6 @@ state*|US State 2 letter abbreviation.
 zip_code*|str
 developer_id*|int
 
-```shell
-curl -X POST https://link.ledge.me/user/create
- -H "Content-Type: application/json"
- -d '{"first_name": "", "street": "", "developer_id": 1, "zip_code": "", "ssn": "", "last_name": "", "email": "", "birthdate": "", "income": "", "apt": "", "phone_number": "", "state": "", "city": ""}'
-```
-
 # Config
 
 Ledge provides various endpoints to populate user input fields that contain a pre-defined list of options.  These config endpoints are already integrated into the drop-in modules included with the Link SDKs; however, if you are building your own custom UI, it is important to integrate the config endpoints appropriately.
@@ -79,10 +80,6 @@ Ledge provides various endpoints to populate user input fields that contain a pr
 ## Available Loan Purposes
 
 ### HTTP Request
-
-`POST https://link.ledge.me/config/loanPurposes`
-
-> To get the list of available loan purposes, use this code:
 
 ```shell
 curl -X POST https://link.ledge.me/config/loanPurposes
@@ -104,6 +101,12 @@ curl -X POST https://link.ledge.me/config/loanPurposes
   ]
 }
 ```
+
+`POST https://link.ledge.me/config/loanPurposes`
+
+
+> To get the list of available loan purposes, use this code:
+
 
 ```swift
 import LedgeLink
@@ -138,6 +141,13 @@ The Loan Purposes endpoint returns a list of valid loan purposes and should be c
 
 ### HTTP Request
 
+```shell
+curl -X POST https://link.ledge.me/offer/requestOffers
+ -H "Content-Type: application/json"
+ -H "Authorization: Bearer {user_token}"
+ -d '{"loan_purpose_id": "", "credit_range": "", "currency": "", "rows": 1, "loan_amount": ""}'
+```
+
 `POST https://link.ledge.me/offer/requestOffers`
 
 ### POST Parameters
@@ -150,14 +160,15 @@ credit_range*| 1 = Excellent Credit (760+), 2 = Good Credit (700+), 3 = Fair Cre
 currency|Three digit currency string. "USD" is only supported currency. <i>(default=USD)</i>
 rows|int <i>(default=10)</i>
 
-```shell
-curl -X POST https://link.ledge.me/offer/requestOffers
- -H "Content-Type: application/json"
- -H "Authorization: Bearer {user_token}"
- -d '{"loan_purpose_id": "", "credit_range": "", "currency": "", "rows": 1, "loan_amount": ""}'
-```
 
 ### HTTP Request
+
+```shell
+curl -X POST https://link.ledge.me/offer/getOffers/{offer_request_id}
+ -H "Content-Type: application/json"
+ -H "Authorization: Bearer {user_token}"
+ -d '{"page": 1, "rows": 1}'
+```
 
 `POST https://link.ledge.me/offer/getOffers/{offer_request_id}`
 
@@ -169,16 +180,17 @@ offer_request_id*|int
 page|int <i>(default=0)</i>
 rows|int <i>(default=10)</i>
 
-```shell
-curl -X POST https://link.ledge.me/offer/getOffers/{offer_request_id}
- -H "Content-Type: application/json"
- -H "Authorization: Bearer {user_token}"
- -d '{"page": 1, "rows": 1}'
-```
 
 #Applications
 
 ### HTTP Request
+
+```shell
+curl -X POST https://link.ledge.me/loan/apply/{offer_id}
+ -H "Content-Type: application/json"
+ -H "Authorization: Bearer {user_token}"
+ -d '{"bank_name": "", "account_holder_name": "", "account_number": "", "routing_number": ""}'
+```
 
 `POST https://link.ledge.me/loan/apply/{offer_id}`
 
@@ -192,12 +204,6 @@ account_holder_name*|str
 account_number*|Any numeric input of digits. ex. 010101
 routing_number*|Any numeric input of digits. ex. 010101
 
-```shell
-curl -X POST https://link.ledge.me/loan/apply/{offer_id}
- -H "Content-Type: application/json"
- -H "Authorization: Bearer {user_token}"
- -d '{"bank_name": "", "account_holder_name": "", "account_number": "", "routing_number": ""}'
-```
 
 #*EXAMPLE STUFF*
 
