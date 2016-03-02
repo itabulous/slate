@@ -78,6 +78,10 @@ Ledge provides various endpoints to populate user input fields that contain a pr
 
 ## Available Loan Purposes
 
+### HTTP Request
+
+`POST https://link.ledge.me/config/loanPurposes`
+
 > To get the list of available loan purposes, use this code:
 
 ```shell
@@ -124,17 +128,11 @@ Property | Description
 --------- | -----------
 loanPurposeId | The loan purpose id
 description | The loan purpose's text that should be shown to the user
-
-
 ```
 
 The Loan Purposes endpoint returns a list of valid loan purposes and should be called prior to sending an offer request to the get_offers endpoint.  In the default interface included with the Link SDK, the loan purpose selector is displayed on the same screen as loan amount.
 
 <aside class="notice">Only the loan purposes defined here will be accepted by the link api.</aside>
-
-### HTTP Request
-
-`POST https://link.ledge.me/config/loanPurposes`
 
 #Offers
 
