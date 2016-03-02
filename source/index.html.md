@@ -66,6 +66,12 @@ state*|US State 2 letter abbreviation.
 zip_code*|str
 developer_id*|int
 
+```shell
+curl -X POST https://link.ledge.me/user/create
+ -H "Content-Type: application/json"
+ -d '{"first_name": "", "street": "", "developer_id": 1, "zip_code": "", "ssn": "", "last_name": "", "email": "", "birthdate": "", "income": "", "apt": "", "phone_number": "", "state": "", "city": ""}'
+```
+
 # Config
 
 Ledge provides various endpoints to populate user input fields that contain a pre-defined list of options.  These config endpoints are already integrated into the drop-in modules included with the Link SDKs; however, if you are building your own custom UI, it is important to integrate the config endpoints appropriately.
@@ -75,13 +81,11 @@ Ledge provides various endpoints to populate user input fields that contain a pr
 > To get the list of available loan purposes, use this code:
 
 ```shell
-curl -X POST http://localhost:8080/config/loanPurposes
-  -d '{"developer_id":"meowmeowmeow"}'
-  -H "Content-Type: application/json"
-  
+curl -X POST https://link.ledge.me/config/loanPurposes
+ -H "Content-Type: application/json"
+ -H "Authorization: Bearer {user_token}"
 # Make sure to replace `meowmeowmeow` with your developer id.
 # The above command returns JSON structured like this:
-
 {
   "loan_purposes": 
   [
@@ -148,6 +152,13 @@ credit_range*| 1 = Excellent Credit (760+), 2 = Good Credit (700+), 3 = Fair Cre
 currency|Three digit currency string. "USD" is only supported currency. <i>(default=USD)</i>
 rows|int <i>(default=10)</i>
 
+```shell
+curl -X POST https://link.ledge.me/offer/requestOffers
+ -H "Content-Type: application/json"
+ -H "Authorization: Bearer {user_token}"
+ -d '{"loan_purpose_id": "", "credit_range": "", "currency": "", "rows": 1, "loan_amount": ""}'
+```
+
 ### HTTP Request
 
 `POST https://link.ledge.me/offer/getOffers/{offer_request_id}`
@@ -159,6 +170,13 @@ Parameter | Description
 offer_request_id*|int
 page|int <i>(default=0)</i>
 rows|int <i>(default=10)</i>
+
+```shell
+curl -X POST https://link.ledge.me/offer/getOffers/{offer_request_id}
+ -H "Content-Type: application/json"
+ -H "Authorization: Bearer {user_token}"
+ -d '{"page": 1, "rows": 1}'
+```
 
 #Applications
 
@@ -176,7 +194,12 @@ account_holder_name*|str
 account_number*|Any numeric input of digits. ex. 010101
 routing_number*|Any numeric input of digits. ex. 010101
 
-TO-DO
+```shell
+curl -X POST https://link.ledge.me/loan/apply/{offer_id}
+ -H "Content-Type: application/json"
+ -H "Authorization: Bearer {user_token}"
+ -d '{"bank_name": "", "account_holder_name": "", "account_number": "", "routing_number": ""}'
+```
 
 #*EXAMPLE STUFF*
 
