@@ -28,7 +28,7 @@ Link is the first natively mobile loan affiliate network, enabling you to introd
 
 As a developer, you can integrate Link via the REST API or through our SDKs (available for [Android](https://ledge.me/link/android) and [iOS](https://ledge.me/link/ios).  The Link SDKs include drop-in native modules that handle all data capture, input validation, and required disclosures for processing offers and/or applications.  These modules can be easily customized to match your brand, with global config values for modifying fonts, colors, and other stylistic elements. 
 
-The Link API is architected around REST, using standard HTTP verbs to communicate and HTTP response codes to indicate status and errors. All responses come in standard JSON. The Link API is served over HTTPS to ensure data privacy; HTTP is not supported. Every request must include your `developer_id`.
+The Link API is architected around REST, and uses HTTP response codes to indicate status and errors. All responses come in standard JSON. The Link API is served over HTTPS to ensure data privacy; HTTP is not supported.
 
 # Authentication
 
@@ -112,10 +112,9 @@ developer_id*|int
 ```shell
 curl -X POST https://link.ledge.me/config/loanPurposes
  -H "Content-Type: application/json"
- -H "Authorization: Bearer {user_token}"
 ```
 
-> <h3 class="toc-ignore">Response</h3>
+> <h3 class="toc-ignore">Response:</h3>
 
 ```json
 {
@@ -140,6 +139,7 @@ curl -X POST https://link.ledge.me/config/loanPurposes
 ```
 
 #Offers
+
 ## Request Offers
 
 > <h3 class="toc-ignore">Definition:</h3>
@@ -155,13 +155,12 @@ curl -X POST https://link.ledge.me/offer/requestOffers
  -d '{
     "rows": 1,
     "loan_purpose_id": "",
-    "credit_range": "",
     "currency": "",
     "loan_amount": ""
 }'
 ```
 
-> <h3 class="toc-ignore">Response</h3>
+> <h3 class="toc-ignore">Response:</h3>
 
 ```json
 {
@@ -171,7 +170,7 @@ curl -X POST https://link.ledge.me/offer/requestOffers
         "data": [
             {
                 "type": "offer",
-                "id": 243192625,
+                "id": 3865552060,
                 "lender": {
                     "type": "lender",
                     "lender_name": "Ninja Loans",
@@ -189,16 +188,18 @@ curl -X POST https://link.ledge.me/offer/requestOffers
                     "duration": 10,
                     "unit": 2
                 },
-                "expiration_date": 1457110794,
+                "expiration_date": 1457528805,
                 "application_method": "api"
             },
-            ...
+            {
+             ...
+            }
         ],
         "page": 0,
         "has_more": false,
         "total_count": 2
     },
-    "offer_request_id": 1019824392
+    "offer_request_id": 1427496866
 }
 ```
 
@@ -206,47 +207,271 @@ curl -X POST https://link.ledge.me/offer/requestOffers
 
 Parameter | Description
 --------- | -----------
-currency|Three digit currency string. "USD" is only supported currency. <i>(default=USD)</i>
+currency|Three digit currency string. "USD" is currently the only supported currency. <i>(default=USD)</i>
 loan_amount*|Numeric input truncated to two decimal places. 10.001 would become 10.00.
-loan_purpose_id*| see #Config TODO...
-credit_range*|1 = Excellent Credit (760+), 2 = Good Credit (700+), 3 = Fair Credit (640+), 4 = Poor Credit
+loan_purpose_id*|See Config Loan Purpose section.
 rows|int <i>(default=10)</i>
 
-#Applications
-
-## Apply for Loan
+## Get Offers List
 
 > <h3 class="toc-ignore">Definition:</h3>
 
-> POST https://link.ledge.me/loan/apply/{offer_id}
+> POST https://link.ledge.me/offer/getOffers/{offer_request_id}
 
 > <h3 class="toc-ignore">Request:</h3>
 
 ```shell
-curl -X POST https://link.ledge.me/loan/apply/{offer_id}
+curl -X POST https://link.ledge.me/offer/getOffers/{offer_request_id}
  -H "Content-Type: application/json"
  -H "Authorization: Bearer {user_token}"
  -d '{
-        "bank_name": "",
-        "routing_number": "",
-        "account_number": "",
-        "account_holder_name": ""
+    "rows": 1,
+    "page": 1
 }'
 ```
 
-> <h3 class="toc-ignore">Response</h3>
+> <h3 class="toc-ignore">Response:</h3>
 
 ```json
-{}
+{
+    "type": "list",
+    "data": [
+        {
+            "type": "offer",
+            "id": 124095277,
+            "lender": {
+                "type": "lender",
+                "lender_name": "Ninja Loans",
+                "small_image": null,
+                "large_image": null,
+                "about": null
+            },
+            "currency": "USD",
+            "loan_amount": 2500.01,
+            "payment_amount": 264.53,
+            "interest_rate": 6,
+            "payment_count": 10,
+            "term": {
+                "type": "term",
+                "duration": 10,
+                "unit": 2
+            },
+            "expiration_date": 1457528805,
+            "application_method": "api"
+        },
+        {
+         ...
+        }
+    ],
+    "page": 0,
+    "has_more": false,
+    "total_count": 2
+}
 ```
 
 ### POST Parameters
 
 Parameter | Description
 --------- | -----------
-offer_id*|int
-bank_name*|str
-account_holder_name*|str
-account_number*|Any numeric input of digits. ex. 010101
-routing_number*|Any numeric input of digits. ex. 010101
+offer_request_id*|int
+page|int <i>(default=0)</i>
+rows|int <i>(default=10)</i>
 
+#Applications
+
+## Apply to an offer
+
+> <h3 class="toc-ignore">Definition:</h3>
+
+> POST https://link.ledge.me/application/create/{offer_id}
+
+> <h3 class="toc-ignore">Request:</h3>
+
+```shell
+curl -X POST https://link.ledge.me/application/create/{offer_id}
+ -H "Content-Type: application/json"
+ -H "Authorization: Bearer {user_token}"
+```
+
+> <h3 class="toc-ignore">Response:</h3>
+
+```json
+{
+    "type": "application",
+    "id": 3171461728,
+    "status": 1,
+    "create_time": 1457356005.189656,
+    "offer": {
+        "type": "offer",
+        "id": 2036168219,
+        "lender": {
+            "type": "lender",
+            "lender_name": "Avant",
+            "small_image": "http://img.com/asd",
+            "large_image": "http://img.com/asdoiu",
+            "about": "Lorem Ipsum"
+        },
+        "currency": "USD",
+        "loan_amount": 2500.01,
+        "payment_amount": 264.53,
+        "interest_rate": 6,
+        "payment_count": 10,
+        "term": {
+            "type": "term",
+            "duration": 10,
+            "unit": 2
+        },
+        "expiration_date": 1457528805,
+        "application_method": "api"
+    },
+    "errors": {
+        "type": "list",
+        "data": [],
+        "page": 0,
+        "has_more": false,
+        "total_count": 0
+    },
+    "required_actions": {
+        "type": "list",
+        "data": [],
+        "page": 0,
+        "has_more": false,
+        "total_count": 0
+    }
+}
+```
+
+## Get Application status
+
+> <h3 class="toc-ignore">Definition:</h3>
+
+> POST https://link.ledge.me/application/status/{application_id}
+
+> <h3 class="toc-ignore">Request:</h3>
+
+```shell
+curl -X POST https://link.ledge.me/application/status/{application_id}
+ -H "Content-Type: application/json"
+ -H "Authorization: Bearer {user_token}"
+```
+
+> <h3 class="toc-ignore">Response:</h3>
+
+```json
+{
+    "type": "application",
+    "id": 1550224233,
+    "status": 1,
+    "create_time": 1457356005.191949,
+    "offer": {
+        "type": "offer",
+        "id": 3882603015,
+        "lender": {
+            "type": "lender",
+            "lender_name": "Avant",
+            "small_image": "http://img.com/asd",
+            "large_image": "http://img.com/asdoiu",
+            "about": "Lorem Ipsum"
+        },
+        "currency": "USD",
+        "loan_amount": 2500.01,
+        "payment_amount": 264.53,
+        "interest_rate": 6,
+        "payment_count": 10,
+        "term": {
+            "type": "term",
+            "duration": 10,
+            "unit": 2
+        },
+        "expiration_date": 1457528805,
+        "application_method": "api"
+    },
+    "errors": {
+        "type": "list",
+        "data": [],
+        "page": 0,
+        "has_more": false,
+        "total_count": 0
+    },
+    "required_actions": {
+        "type": "list",
+        "data": [],
+        "page": 0,
+        "has_more": false,
+        "total_count": 0
+    }
+}
+```
+
+## Get Applications list
+
+> <h3 class="toc-ignore">Definition:</h3>
+
+> POST https://link.ledge.me/application/list
+
+> <h3 class="toc-ignore">Request:</h3>
+
+```shell
+curl -X POST https://link.ledge.me/application/list
+ -H "Content-Type: application/json"
+ -H "Authorization: Bearer {user_token}"
+ -d '{
+    "rows": 1,
+    "page": 1
+}'
+```
+
+> <h3 class="toc-ignore">Response:</h3>
+
+```json
+{
+    "type": "application",
+    "id": 3504625771,
+    "status": 1,
+    "create_time": 1457356005.196281,
+    "offer": {
+        "type": "offer",
+        "id": 3229200725,
+        "lender": {
+            "type": "lender",
+            "lender_name": "Avant",
+            "small_image": "http://img.com/asd",
+            "large_image": "http://img.com/asdoiu",
+            "about": "Lorem Ipsum"
+        },
+        "currency": "USD",
+        "loan_amount": 2500.01,
+        "payment_amount": 264.53,
+        "interest_rate": 6,
+        "payment_count": 10,
+        "term": {
+            "type": "term",
+            "duration": 10,
+            "unit": 2
+        },
+        "expiration_date": 1457528805,
+        "application_method": "api"
+    },
+    "errors": {
+        "type": "list",
+        "data": [],
+        "page": 0,
+        "has_more": false,
+        "total_count": 0
+    },
+    "required_actions": {
+        "type": "list",
+        "data": [],
+        "page": 0,
+        "has_more": false,
+        "total_count": 0
+    }
+}
+```
+
+### POST Parameters
+
+Parameter | Description
+--------- | -----------
+page|int <i>(default=0)</i>
+rows|int <i>(default=10)</i>
