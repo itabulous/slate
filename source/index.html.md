@@ -84,31 +84,19 @@ Create a user that can apply for offers and loans.  In the default UI modules in
 
 Parameter | Description
 --------- | -----------
-first_name*|User's legal First Name
-Example: Michael
-last_name*|User's legal Last Name
-Example: Bluth
-birthdate*|User's Birthday in format MM-DD-YYYY
-Example: 07-04-1776
-ssn*|User's 9 Digit Social Security Number. XXX-XX-XXXX
-Example: 123-45-6789
-email*|User's email address.
-Example: developer@ledge.me
-phone_number*|User's Phone number in E164 format.
-Example: +1 424-260-8561
-income*|User's annual pretax income expressed as a Numeric input truncated to two decimal places.
-Example: 100000.001 would become 100000.00
+first_name*|User's legal First Name EX: Michael)
+last_name*|User's legal Last Name EX: Bluth)
+birthdate*|User's Birthday in format MM-DD-YYYY EX: 07-04-1776)
+ssn*|User's 9 Digit Social Security Number. XXX-XX-XXXX EX: 123-45-6789)
+email*|User's email address. EX: developer@ledge.me)
+phone_number*|User's Phone number in E164 format. EX: +1 424-260-8561)
+income*|User's annual pretax income expressed as a Numeric input truncated to two decimal places. EX: 100000.001 would become 100000.00
 credit_range*|1 = Excellent Credit (760+), 2 = Good Credit (700+), 3 = Fair Credit (640+), 4 = Poor Credit
-street*|User’s mailing address (street + street number)
-Example: 2633 Lincoln Blvd
-apt|User's apartment or unit number
-Example: #715 <i>(default=)</i>
-city*|User's city
-Example: Santa Monica
-state*|User's US State 2 letter abbreviation.
-Example: CA
-zip_code*|User's ZIP or postal code (5 or 9 digits)
-Example: 90405
+street*|User’s mailing address (street + street number) EX: 2633 Lincoln Blvd
+apt|User's apartment or unit number EX: #715 <i>(default=)</i>
+city*|User's city EX: Santa Monica
+state*|User's US State 2 letter abbreviation. EX: CA
+zip_code*|User's ZIP or postal code (5 or 9 digits) EX: 90405
 developer_id*|Developer's Link ID.  This cannot be changed once it has been set.
 
 ## Update User
