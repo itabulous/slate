@@ -3,10 +3,6 @@ title: Ledge Link API Reference
 
 language_tabs:
   - shell
-  - python
-  - java
-  - objective-c
-  - swift
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
@@ -57,23 +53,24 @@ You can register for a developer ID [here](https:link.ledge.me/register).
 curl -X POST https://link.ledge.me/user/create
  -H "Content-Type: application/json"
  -d '{
-    "state": "",
-    "apt": "",
-    "last_name": "",
-    "developer_id": 1,
-    "city": "",
-    "first_name": "",
     "zip_code": "",
+    "credit_range": "",
+    "first_name": "",
     "ssn": "",
-    "income": "",
-    "street": "",
-    "birthdate": "",
     "phone_number": "",
-    "email": ""
+    "income": "",
+    "birthdate": "",
+    "email": "",
+    "developer_id": 1,
+    "last_name": "",
+    "apt": "",
+    "state": "",
+    "street": "",
+    "city": ""
 }'
 ```
 
-> <h3 class="toc-ignore">Response</h3>
+> <h3 class="toc-ignore">Response:</h3>
 
 ```json
 {
@@ -81,25 +78,161 @@ curl -X POST https://link.ledge.me/user/create
 }
 ```
 
+Create a user that can apply for offers and loans.  In the default UI modules included with the Link SDK, this method is called when a user submits a request to get offers after filling out all required info.  This method will support posting user data that has been passed into the SDK when a user launches and opt in to Link from within a partner application.
+
 ### POST Parameters
 
 Parameter | Description
 --------- | -----------
-first_name*|str
-last_name*|str
-birthdate*|Birthday in format MM-DD-YYYY
-ssn*|9 Digit SSN. XXX-XX-XXXX
-email*|str
-phone_number*|Phone number in E164 format. ex. +1 333-444-5555
-income*|Numeric input truncated to two decimal places. 10.001 would become 10.00.
-street*|str
-apt|str <i>(default=)</i>
-city*|str
-state*|US State 2 letter abbreviation.
-zip_code*|str
-developer_id*|int
+first_name*|User's legal First Name
+Example: Michael
+last_name*|User's legal Last Name
+Example: Bluth
+birthdate*|User's Birthday in format MM-DD-YYYY
+Example: 07-04-1776
+ssn*|User's 9 Digit Social Security Number. XXX-XX-XXXX
+Example: 123-45-6789
+email*|User's email address.
+Example: developer@ledge.me
+phone_number*|User's Phone number in E164 format.
+Example: +1 424-260-8561
+income*|User's annual pretax income expressed as a Numeric input truncated to two decimal places.
+Example: 100000.001 would become 100000.00
+credit_range*|1 = Excellent Credit (760+), 2 = Good Credit (700+), 3 = Fair Credit (640+), 4 = Poor Credit
+street*|User’s mailing address (street + street number)
+Example: 2633 Lincoln Blvd
+apt|User's apartment or unit number
+Example: #715 <i>(default=)</i>
+city*|User's city
+Example: Santa Monica
+state*|User's US State 2 letter abbreviation.
+Example: CA
+zip_code*|User's ZIP or postal code (5 or 9 digits)
+Example: 90405
+developer_id*|Developer's Link ID.  This cannot be changed once it has been set.
 
-#Config
+## Update User
+
+> <h3 class="toc-ignore">Definition:</h3>
+
+> POST https://link.ledge.me/user/update
+
+> <h3 class="toc-ignore">Request:</h3>
+
+```shell
+curl -X POST https://link.ledge.me/user/update
+ -H "Content-Type: application/json"
+ -H "Authorization: Bearer {user_token}"
+ -d '{
+    "zip_code": "",
+    "credit_range": "",
+    "first_name": "",
+    "ssn": "",
+    "phone_number": "",
+    "income": "",
+    "birthdate": "",
+    "email": "",
+    "last_name": "",
+    "apt": "",
+    "state": "",
+    "street": "",
+    "city": ""
+}'
+```
+
+> <h3 class="toc-ignore">Response:</h3>
+
+```json
+{
+    "type": "user",
+    "first_name": "John",
+    "last_name": "Smith",
+    "birth_date": "02/14/1980",
+    "income": "60000",
+    "self_reported_credit_score_range": 3,
+    "email": "john.smith@corp.com",
+    "phone_number": "+12015555555",
+    "address": {
+        "type": "address",
+        "street": "1310 Fillmore st",
+        "apt": "123",
+        "city": "San Francisco",
+        "state": "CA",
+        "zip_code": "94115"
+    }
+}
+```
+
+Update current user's info.  In the default UI modules included in the Link SDK, this method is called when a user submits updates to their profile info after previously registering an account.  Please note that the developer ID associated with a user is set with the /user/create method and cannot subsequently be updated.
+
+### POST Parameters
+
+Parameter | Description
+--------- | -----------
+first_name*|User's legal First Name
+Example: Michael
+last_name*|User's legal Last Name
+Example: Bluth
+birthdate*|User's Birthday in format MM-DD-YYYY
+Example: 07-04-1776
+ssn|User's 9 Digit Social Security Number. XXX-XX-XXXX
+Example: 123-45-6789
+email*|User's email address.
+Example: developer@ledge.me
+phone_number*|User's Phone number in E164 format.
+EX: +1 424-260-8561
+income*|User's annual pretax income expressed as a Numeric input truncated to two decimal places.
+Example: 100000.001 would become 100000.00
+credit_range*|1 = Excellent Credit (760+), 2 = Good Credit (700+), 3 = Fair Credit (640+), 4 = Poor Credit
+street*|User’s mailing address (street + street number)
+Example: 2633 Lincoln Blvd
+apt|User's apartment or unit number
+Example: #715 <i>(default=)</i>
+city*|User's city
+Example: Santa Monica
+state*|User's US State 2 letter abbreviation.
+Example: CA
+zip_code*|User's ZIP or postal code (5 or 9 digits)
+Example: 90405 or 90230-4124
+
+## Get User Info
+
+> <h3 class="toc-ignore">Definition:</h3>
+
+> POST https://link.ledge.me/user/getInfo
+
+> <h3 class="toc-ignore">Request:</h3>
+
+```shell
+curl -X POST https://link.ledge.me/user/getInfo
+ -H "Content-Type: application/json"
+ -H "Authorization: Bearer {user_token}"
+```
+
+> <h3 class="toc-ignore">Response:</h3>
+
+```json
+{
+    "type": "user",
+    "first_name": "John",
+    "last_name": "Smith",
+    "birth_date": "02/14/1980",
+    "income": "60000",
+    "self_reported_credit_score_range": 3,
+    "email": "john.smith@corp.com",
+    "phone_number": "+12015555555",
+    "address": {
+        "type": "address",
+        "street": "1310 Fillmore st",
+        "apt": "123",
+        "city": "San Francisco",
+        "state": "CA",
+        "zip_code": "94115"
+    }
+}
+```
+
+Get current user's info.  In the default UI modules included in the Link SDK, this method is called whenever user data is retrieved and/or displayed; for example, in the case that a user opts to edit their existing profile info, /user/getInfo is called to pre-fill previously submitted profile info.  SSN is not be returned via this method.
 
 ## Loan Purposes List
 
@@ -138,6 +271,9 @@ curl -X POST https://link.ledge.me/config/loanPurposes
 }
 ```
 
+The Loan Purposes endpoint returns a list of valid loan purposes and should be called prior to sending an offer request to the ['requestOffers'](#request-offers) endpoint.  In the default UI modules included with the Link SDK, the loan purpose selector is displayed on the same screen as loan amount.
+
+
 #Offers
 
 ## Request Offers
@@ -153,10 +289,10 @@ curl -X POST https://link.ledge.me/offer/requestOffers
  -H "Content-Type: application/json"
  -H "Authorization: Bearer {user_token}"
  -d '{
-    "rows": 1,
+    "loan_amount": "",
     "loan_purpose_id": "",
-    "currency": "",
-    "loan_amount": ""
+    "rows": 1,
+    "currency": ""
 }'
 ```
 
@@ -170,7 +306,7 @@ curl -X POST https://link.ledge.me/offer/requestOffers
         "data": [
             {
                 "type": "offer",
-                "id": 3865552060,
+                "id": 1998182190,
                 "lender": {
                     "type": "lender",
                     "lender_name": "Ninja Loans",
@@ -188,29 +324,51 @@ curl -X POST https://link.ledge.me/offer/requestOffers
                     "duration": 10,
                     "unit": 2
                 },
-                "expiration_date": 1457528805,
+                "expiration_date": 1457716315,
                 "application_method": "api"
             },
             {
-             ...
+                "type": "offer",
+                "id": 314515208,
+                "lender": {
+                    "type": "lender",
+                    "lender_name": "Ninja Loans",
+                    "small_image": null,
+                    "large_image": null,
+                    "about": null
+                },
+                "currency": "USD",
+                "loan_amount": 2500.01,
+                "payment_amount": 281.24,
+                "interest_rate": 8,
+                "payment_count": 10,
+                "term": {
+                    "type": "term",
+                    "duration": 10,
+                    "unit": 2
+                },
+                "expiration_date": 1457716315,
+                "application_method": "web"
             }
         ],
         "page": 0,
         "has_more": false,
         "total_count": 2
     },
-    "offer_request_id": 1427496866
+    "offer_request_id": 103016972
 }
 ```
+
+Submit a request to populate offers for a user and receive a list of pre-qualified offers.  The user should be prompted to consent to share their data with affiliate lenders and authorizing a soft credit pull (which will not affect their credit score) prior to requesting offers; this consent flow is enforced by default in the UI modules included with the Ledge SDK.  Posts to the method will return an array of offers with accompanying loan terms (subject to change when an loan application is submitted).
 
 ### POST Parameters
 
 Parameter | Description
 --------- | -----------
 currency|Three digit currency string. "USD" is currently the only supported currency. <i>(default=USD)</i>
-loan_amount*|Numeric input truncated to two decimal places. 10.001 would become 10.00.
+loan_amount*|Loan amount you are requesting with maximum two decimal places. Currency specifier required.
 loan_purpose_id*|See Config Loan Purpose section.
-rows|int <i>(default=10)</i>
+rows|Maximum number of offers returned. <i>(default=10)</i>
 
 ## Get Offers List
 
@@ -225,8 +383,8 @@ curl -X POST https://link.ledge.me/offer/getOffers/{offer_request_id}
  -H "Content-Type: application/json"
  -H "Authorization: Bearer {user_token}"
  -d '{
-    "rows": 1,
-    "page": 1
+    "page": 1,
+    "rows": 1
 }'
 ```
 
@@ -238,7 +396,7 @@ curl -X POST https://link.ledge.me/offer/getOffers/{offer_request_id}
     "data": [
         {
             "type": "offer",
-            "id": 124095277,
+            "id": 3643733953,
             "lender": {
                 "type": "lender",
                 "lender_name": "Ninja Loans",
@@ -256,11 +414,31 @@ curl -X POST https://link.ledge.me/offer/getOffers/{offer_request_id}
                 "duration": 10,
                 "unit": 2
             },
-            "expiration_date": 1457528805,
+            "expiration_date": 1457716315,
             "application_method": "api"
         },
         {
-         ...
+            "type": "offer",
+            "id": 1256860378,
+            "lender": {
+                "type": "lender",
+                "lender_name": "Ninja Loans",
+                "small_image": null,
+                "large_image": null,
+                "about": null
+            },
+            "currency": "USD",
+            "loan_amount": 2500.01,
+            "payment_amount": 281.24,
+            "interest_rate": 8,
+            "payment_count": 10,
+            "term": {
+                "type": "term",
+                "duration": 10,
+                "unit": 2
+            },
+            "expiration_date": 1457716315,
+            "application_method": "web"
         }
     ],
     "page": 0,
@@ -269,13 +447,15 @@ curl -X POST https://link.ledge.me/offer/getOffers/{offer_request_id}
 }
 ```
 
+Get offers based on a given {offer_request_id}
+
 ### POST Parameters
 
 Parameter | Description
 --------- | -----------
-offer_request_id*|int
-page|int <i>(default=0)</i>
-rows|int <i>(default=10)</i>
+offer_request_id*|See Request Offers section.
+page|0 indexed page of results. <i>(default=0)</i>
+rows|Maximum number of rows per page. <i>(default=10)</i>
 
 #Applications
 
@@ -298,12 +478,12 @@ curl -X POST https://link.ledge.me/application/create/{offer_id}
 ```json
 {
     "type": "application",
-    "id": 3171461728,
+    "id": 2519897282,
     "status": 1,
-    "create_time": 1457356005.189656,
+    "create_time": 1457543515.148443,
     "offer": {
         "type": "offer",
-        "id": 2036168219,
+        "id": 1739834508,
         "lender": {
             "type": "lender",
             "lender_name": "Avant",
@@ -321,7 +501,7 @@ curl -X POST https://link.ledge.me/application/create/{offer_id}
             "duration": 10,
             "unit": 2
         },
-        "expiration_date": 1457528805,
+        "expiration_date": 1457716315,
         "application_method": "api"
     },
     "errors": {
@@ -340,6 +520,9 @@ curl -X POST https://link.ledge.me/application/create/{offer_id}
     }
 }
 ```
+
+Create a loan application for a previously received offer.  The user should be prompted to consent to a hard credit pull and formal underwriting decision prior to creating a loan application; the required consent and disclosures are displayed by default in the UI modules included with the Link SDK.
+
 
 ## Get Application status
 
@@ -360,12 +543,12 @@ curl -X POST https://link.ledge.me/application/status/{application_id}
 ```json
 {
     "type": "application",
-    "id": 1550224233,
+    "id": 735169377,
     "status": 1,
-    "create_time": 1457356005.191949,
+    "create_time": 1457543515.150377,
     "offer": {
         "type": "offer",
-        "id": 3882603015,
+        "id": 1851589608,
         "lender": {
             "type": "lender",
             "lender_name": "Avant",
@@ -383,7 +566,7 @@ curl -X POST https://link.ledge.me/application/status/{application_id}
             "duration": 10,
             "unit": 2
         },
-        "expiration_date": 1457528805,
+        "expiration_date": 1457716315,
         "application_method": "api"
     },
     "errors": {
@@ -402,6 +585,9 @@ curl -X POST https://link.ledge.me/application/status/{application_id}
     }
 }
 ```
+
+Retrieve the status, associated terms, and pending actions (I.E. signing loan documents, uploading ID, etc.) for a previously submitted application.
+
 
 ## Get Applications list
 
@@ -416,8 +602,8 @@ curl -X POST https://link.ledge.me/application/list
  -H "Content-Type: application/json"
  -H "Authorization: Bearer {user_token}"
  -d '{
-    "rows": 1,
-    "page": 1
+    "page": 1,
+    "rows": 1
 }'
 ```
 
@@ -426,12 +612,12 @@ curl -X POST https://link.ledge.me/application/list
 ```json
 {
     "type": "application",
-    "id": 3504625771,
+    "id": 908245951,
     "status": 1,
-    "create_time": 1457356005.196281,
+    "create_time": 1457543515.153444,
     "offer": {
         "type": "offer",
-        "id": 3229200725,
+        "id": 1911005941,
         "lender": {
             "type": "lender",
             "lender_name": "Avant",
@@ -449,7 +635,7 @@ curl -X POST https://link.ledge.me/application/list
             "duration": 10,
             "unit": 2
         },
-        "expiration_date": 1457528805,
+        "expiration_date": 1457716315,
         "application_method": "api"
     },
     "errors": {
@@ -469,9 +655,11 @@ curl -X POST https://link.ledge.me/application/list
 }
 ```
 
+Retrieve a list of all previously submitted applications made by a user via a partner's Link instance.
+
 ### POST Parameters
 
 Parameter | Description
 --------- | -----------
-page|int <i>(default=0)</i>
-rows|int <i>(default=10)</i>
+page|0 indexed page of results. <i>(default=0)</i>
+rows|Maximum number of applications returned per page. <i>(default=10)</i>
