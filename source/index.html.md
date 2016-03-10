@@ -157,8 +157,7 @@ Update current user's info.  In the default UI modules included in the Link SDK,
 
 Parameter | Description
 --------- | -----------
-first_name*|User's legal First Name
-Example: Michael
+first_name*|<ul><li>User's legal First Name</li><li>Example: Michael</li></ul>
 last_name*|User's legal Last Name
 Example: Bluth
 birthdate*|User's Birthday in format MM-DD-YYYY
