@@ -53,20 +53,20 @@ You can register for a developer ID [here](https:link.ledge.me/register).
 curl -X POST https://link.ledge.me/user/create
  -H "Content-Type: application/json"
  -d '{
-    "zip_code": "",
-    "credit_range": "",
-    "first_name": "",
-    "ssn": "",
-    "phone_number": "",
-    "income": "",
-    "birthdate": "",
-    "email": "",
+    "first_name": "Michael",
+    "last_name": "Bluth",
+    "ssn": "123-45-6789",
+    "phone_number": "+1 424-260-8561",
+    "income": "100000.01",
+    "birthdate": "07-04-1975",
+    "email": "developer@ledge.me",
+    "credit_range": "1",
+    "apt": "#715",
+    "state": "CA",
+    "street": "2633 Lincoln Blvd",
+    "city": "Santa Monica"
+    "zip_code": "90405",
     "developer_id": 1,
-    "last_name": "",
-    "apt": "",
-    "state": "",
-    "street": "",
-    "city": ""
 }'
 ```
 
@@ -84,19 +84,19 @@ Create a user that can apply for offers and loans.  In the default UI modules in
 
 Parameter | Description
 --------- | -----------
-first_name*|User's legal First Name EX: Michael)
-last_name*|User's legal Last Name EX: Bluth)
-birthdate*|User's Birthday in format MM-DD-YYYY EX: 07-04-1776)
-ssn*|User's 9 Digit Social Security Number. XXX-XX-XXXX EX: 123-45-6789)
-email*|User's email address. EX: developer@ledge.me)
-phone_number*|User's Phone number in E164 format. EX: +1 424-260-8561)
-income*|User's annual pretax income expressed as a Numeric input truncated to two decimal places. EX: 100000.001 would become 100000.00
+first_name*|User's legal First Name<br>Example: Michael
+last_name*|User's legal Last Name<br>Example: Bluth
+birthdate*|User's Birthday in format MM-DD-YYYY<br>Example: 07-04-1776
+ssn*|User's 9 Digit Social Security Number. XXX-XX-XXXX<br>Example: 123-45-6789
+email*|User's email address.<br>Example: developer@ledge.me
+phone_number*|User's Phone number in E164 format. <br>Example: +1 424-260-8561
+income*|User's annual pretax income expressed as a Numeric input truncated to two decimal places.<br>Example: 100000.001 would become 100000.00
 credit_range*|1 = Excellent Credit (760+), 2 = Good Credit (700+), 3 = Fair Credit (640+), 4 = Poor Credit
-street*|User’s mailing address (street + street number) EX: 2633 Lincoln Blvd
-apt|User's apartment or unit number EX: #715 <i>(default=)</i>
-city*|User's city EX: Santa Monica
-state*|User's US State 2 letter abbreviation. EX: CA
-zip_code*|User's ZIP or postal code (5 or 9 digits) EX: 90405
+street*|User’s mailing address (street + street number)<br>Example: 2633 Lincoln Blvd
+apt|User's apartment or unit number<br>Example: #715
+city*|User's city<br>Example: Santa Monica
+state*|User's US State 2 letter abbreviation.<br>Example: CA
+zip_code*|User's ZIP or postal code (5 or 9 digits)<br>Example: 90405
 developer_id*|Developer's Link ID.  This cannot be changed once it has been set.
 
 ## Update User
@@ -112,19 +112,19 @@ curl -X POST https://link.ledge.me/user/update
  -H "Content-Type: application/json"
  -H "Authorization: Bearer {user_token}"
  -d '{
-    "zip_code": "",
-    "credit_range": "",
-    "first_name": "",
-    "ssn": "",
-    "phone_number": "",
-    "income": "",
-    "birthdate": "",
-    "email": "",
-    "last_name": "",
-    "apt": "",
-    "state": "",
-    "street": "",
-    "city": ""
+    "first_name": "Michael",
+    "last_name": "Bluth",
+    "ssn": "123-45-6789",
+    "phone_number": "+1 424-260-8561",
+    "income": "100000.01",
+    "birthdate": "07-04-1975",
+    "email": "developer@ledge.me",
+    "credit_range": "1",
+    "apt": "#715",
+    "state": "CA",
+    "street": "2633 Lincoln Blvd",
+    "city": "Santa Monica"
+    "zip_code": "90405",
 }'
 ```
 
@@ -155,32 +155,21 @@ Update current user's info.  In the default UI modules included in the Link SDK,
 
 ### POST Parameters
 
-| Parameter | Description |
-| --------- | ----------- |
-| first_name* | <ul><li>User's legal First Name</li><li>Michael</li></ul> |
-last_name*|User's legal Last Name
-Example: Bluth
-birthdate*|User's Birthday in format MM-DD-YYYY
-Example: 07-04-1776
-ssn|User's 9 Digit Social Security Number. XXX-XX-XXXX
-Example: 123-45-6789
-email*|User's email address.
-Example: developer@ledge.me
-phone_number*|User's Phone number in E164 format.
-EX: +1 424-260-8561
-income*|User's annual pretax income expressed as a Numeric input truncated to two decimal places.
-Example: 100000.001 would become 100000.00
+Parameter | Description
+--------- | -----------
+first_name* | User's legal First Name<br>Example: Michael
+last_name* | User's legal Last Name<br>Example: Bluth
+birthdate*|User's Birthday in format MM-DD-YYYY<br>Example: 07-04-1776
+ssn|User's 9 Digit Social Security Number. XXX-XX-XXXX<br>Example: 123-45-6789
+email*|User's email address.<br>Example: developer@ledge.me
+phone_number*|User's Phone number in E164 format.<br>Example: +1 424-260-8561
+income*|User's annual pretax income expressed as a Numeric input truncated to two decimal places.<br>Example: 100000.001 would become 100000.00
 credit_range*|1 = Excellent Credit (760+), 2 = Good Credit (700+), 3 = Fair Credit (640+), 4 = Poor Credit
-street*|User’s mailing address (street + street number)
-Example: 2633 Lincoln Blvd
-apt|User's apartment or unit number
-Example: #715 <i>(default=)</i>
-city*|User's city
-Example: Santa Monica
-state*|User's US State 2 letter abbreviation.
-Example: CA
-zip_code*|User's ZIP or postal code (5 or 9 digits)
-Example: 90405 or 90230-4124
+street*|User’s mailing address (street + street number)<br>Example: 2633 Lincoln Blvd
+apt|User's apartment or unit number<br>Example: #715
+city*|User's city<br>Example: Santa Monica
+state*|User's US State 2 letter abbreviation.<br>Example: CA
+zip_code*|User's ZIP or postal code (5 or 9 digits)<br>Example: 90405 or 90230-4124
 
 ## Get User Info
 
@@ -276,10 +265,10 @@ curl -X POST https://link.ledge.me/offer/requestOffers
  -H "Content-Type: application/json"
  -H "Authorization: Bearer {user_token}"
  -d '{
-    "loan_amount": "",
-    "loan_purpose_id": "",
+    "loan_amount": "105.33",
+    "loan_purpose_id": 2,
     "rows": 1,
-    "currency": ""
+    "currency": "USD"
 }'
 ```
 
