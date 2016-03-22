@@ -454,12 +454,12 @@ curl -X POST https://link.ledge.me/application/create/{offer_id}
 ```json
 {
     "type": "application",
-    "id": 2519897282,
-    "status": 1,
-    "create_time": 1457543515.148443,
+    "id": 1873558379,
+    "status": "APPLICATION_RECEIVED",
+    "create_time": 1458677383,
     "offer": {
         "type": "offer",
-        "id": 1739834508,
+        "id": 2195152982,
         "lender": {
             "type": "lender",
             "lender_name": "Avant",
@@ -477,16 +477,10 @@ curl -X POST https://link.ledge.me/application/create/{offer_id}
             "duration": 10,
             "unit": 2
         },
-        "expiration_date": 1457716315,
+        "expiration_date": 1458850183,
         "application_method": "api"
     },
-    "errors": {
-        "type": "list",
-        "data": [],
-        "page": 0,
-        "has_more": false,
-        "total_count": 0
-    },
+    "status_message": "Avant is processing your application.",
     "required_actions": {
         "type": "list",
         "data": [],
@@ -519,12 +513,12 @@ curl -X POST https://link.ledge.me/application/status/{application_id}
 ```json
 {
     "type": "application",
-    "id": 735169377,
-    "status": 1,
-    "create_time": 1457543515.150377,
+    "id": 1342330624,
+    "status": "APPLICATION_RECEIVED",
+    "create_time": 1458677332,
     "offer": {
         "type": "offer",
-        "id": 1851589608,
+        "id": 842504072,
         "lender": {
             "type": "lender",
             "lender_name": "Avant",
@@ -542,16 +536,10 @@ curl -X POST https://link.ledge.me/application/status/{application_id}
             "duration": 10,
             "unit": 2
         },
-        "expiration_date": 1457716315,
+        "expiration_date": 1458850132,
         "application_method": "api"
     },
-    "errors": {
-        "type": "list",
-        "data": [],
-        "page": 0,
-        "has_more": false,
-        "total_count": 0
-    },
+    "status_message": "Avant is processing your application.",
     "required_actions": {
         "type": "list",
         "data": [],
@@ -587,47 +575,91 @@ curl -X POST https://link.ledge.me/application/list
 
 ```json
 {
-    "type": "application",
-    "id": 908245951,
-    "status": 1,
-    "create_time": 1457543515.153444,
-    "offer": {
-        "type": "offer",
-        "id": 1911005941,
-        "lender": {
-            "type": "lender",
-            "lender_name": "Avant",
-            "small_image": "http://img.com/asd",
-            "large_image": "http://img.com/asdoiu",
-            "about": "Lorem Ipsum"
+    "type": "list",
+    "data": [
+        {
+            "type": "application",
+            "id": 533921913,
+            "status": "PENDING_BORROWER_ACTION",
+            "create_time": 1458677149,
+            "offer": {
+                "type": "offer",
+                "id": 3404136795,
+                "lender": {
+                    "type": "lender",
+                    "lender_name": "Avant",
+                    "small_image": "http://img.com/asd",
+                    "large_image": "http://img.com/asdoiu",
+                    "about": "Lorem Ipsum"
+                },
+                "currency": "USD",
+                "loan_amount": 2500.01,
+                "payment_amount": 264.53,
+                "interest_rate": 6,
+                "payment_count": 10,
+                "term": {
+                    "type": "term",
+                    "duration": 10,
+                    "unit": 2
+                },
+                "expiration_date": 1458849949,
+                "application_method": "api"
+            },
+            "status_message": "Avant needs you to complete your application.",
+            "required_actions": {
+                "type": "list",
+                "data": [
+                    {
+                        "action": 2,
+                        "message": "Avant needs you to upload a photo ID."
+                    }
+                ],
+                "page": 0,
+                "has_more": false,
+                "total_count": 1
+            }
         },
-        "currency": "USD",
-        "loan_amount": 2500.01,
-        "payment_amount": 264.53,
-        "interest_rate": 6,
-        "payment_count": 10,
-        "term": {
-            "type": "term",
-            "duration": 10,
-            "unit": 2
-        },
-        "expiration_date": 1457716315,
-        "application_method": "api"
-    },
-    "errors": {
-        "type": "list",
-        "data": [],
-        "page": 0,
-        "has_more": false,
-        "total_count": 0
-    },
-    "required_actions": {
-        "type": "list",
-        "data": [],
-        "page": 0,
-        "has_more": false,
-        "total_count": 0
-    }
+        {
+            "type": "application",
+            "id": 3879846493,
+            "status": "APPLICATION_RECEIVED",
+            "create_time": 1458677149,
+            "offer": {
+                "type": "offer",
+                "id": 2918724036,
+                "lender": {
+                    "type": "lender",
+                    "lender_name": "Credit Shop",
+                    "small_image": "http://img.com/asd",
+                    "large_image": "http://img.com/asdoiu",
+                    "about": "Lorem Ipsum"
+                },
+                "currency": "USD",
+                "loan_amount": 2500.01,
+                "payment_amount": 264.53,
+                "interest_rate": 6,
+                "payment_count": 10,
+                "term": {
+                    "type": "term",
+                    "duration": 10,
+                    "unit": 2
+                },
+                "expiration_date": 1458849949,
+                "application_method": "api"
+            },
+            "status_message": "Credit Shop is processing your application.",
+            "required_actions": {
+                "type": "list",
+                "data": [],
+                "page": 0,
+                "has_more": false,
+                "total_count": 0
+            }
+        }
+    ],
+    "page": 0,
+    "has_more": false,
+    "total_count": 2
 }
 ```
 
