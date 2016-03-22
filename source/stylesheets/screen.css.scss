@@ -399,6 +399,12 @@ html, body {
     font-size: 10px;
   }
 
+  h3 {
+    font-size: 13px;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+  }
+
   hr {
     margin: 2em 0;
     border-top: 2px solid $examples-bg;
@@ -551,6 +557,7 @@ html, body {
   }
 
   blockquote {
+    padding: 0em 28px .5em 28px;
     &>p {
       background-color: $code-annotation-bg;
       border-radius: 5px;
