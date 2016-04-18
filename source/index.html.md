@@ -26,6 +26,25 @@ As a developer, you can integrate Link via the REST API or through our SDKs (ava
 
 The Link API is architected around REST, and uses HTTP response codes to indicate status and errors. All responses come in standard JSON. The Link API is served over HTTPS to ensure data privacy; HTTP is not supported.
 
+# Developer Sandbox
+
+When making a request for loan offers there are special dollar amounts that will change the behavior of the loan applications response state when you apply for the offer.
+
+Offer Request Amount | Loan Application State | Action(s)
+-------------------- | ---------------------- | ---------
+$500 | APPLICATION_REJECTED |
+$1,000 | PENDING_LENDER_ACTION |
+$1,500 | PENDING_BORROWER_ACTION | UPLOAD_PHOTO_ID
+$2,000 | FINISH_APPLICATION_EXTERNAL |
+$2100 | PENDING BORROWER_ACTION | UPLOAD_BANK_STATEMENT
+$2200 | PENDING_BORROWER_ACTION | TEXT
+$2300 | PENDING_BORROWER_ACTION | UPLOAD_PROOF_OF_ADDRESS
+$2400 | PENDING_BORROWER_ACTION | UPLOAD_PROOF_OF_ADDRESS, UPLOAD_PHOTO_ID, UPLOAD_BANK_STATEMENT
+$2,500 | APPLICATION_RECEIVED |
+$2,600 | No offers. | 
+$2700 | Web application via redirect. |
+$3,000 | ERROR |
+
 # Authentication
 
 There are two types of authentication within the Link API:
@@ -493,6 +512,27 @@ curl -X POST https://link.ledge.me/application/create/{offer_id}
 
 Create a loan application for a previously received offer.  The user should be prompted to consent to a hard credit pull and formal underwriting decision prior to creating a loan application; the required consent and disclosures are displayed by default in the UI modules included with the Link SDK.
 
+Application status and required actions can be tested by using the special dollar values described above in developer sandbox section.
+
+Application status| Description
+------------------|------------------
+APPLICATION_RECEIVED|Your application was received and is being processed.
+APPLICATION_REJECTED|Your application was rejected by the lender.
+PENDING_LENDER_ACTION|Lender is processing your application.
+PENDING_BORROWER_ACTION|Borrower must take further action to complete the application. Please review "required_actions" list.
+LENDER_REJECTED|After reviewing applicaiton details the lender has rejected the application.
+LOAN_APPROVED|Loan was approved.
+
+Required actions list is populated with one or more of the following when loan is in PENDING_BORROWER_ACTION status.
+
+Application required_actions|Description
+------------------|------------------
+UPLOAD_BANK_STATEMENT|Upload a bank statement.
+UPLOAD_PHOTO_ID|Upload a goverment issued photo identification.
+UPLOAD_PROOF_OF_ADDRESS|Upload a utility or telephone bill to prove your address.
+AGREE_TERMS|Agree to terms and esign application.
+FINISH_APPLICATION_EXTERNAL|Follow the url to finish the last steps of application on another site.
+TEXT|Follow instructions in text, parse and url to make it clickable.
 
 ## Get Application status
 
@@ -610,7 +650,7 @@ curl -X POST https://link.ledge.me/application/list
                 "type": "list",
                 "data": [
                     {
-                        "action": 2,
+                        "action": "UPLOAD_PHOTO_ID",
                         "message": "Avant needs you to upload a photo ID."
                     }
                 ],
