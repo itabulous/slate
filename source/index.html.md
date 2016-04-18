@@ -28,6 +28,17 @@ The Link API is architected around REST, and uses HTTP response codes to indicat
 
 # Developer Sandbox
 
+## Example Native Apps using SDK
+
+Below are downloadable example apps that use our SDKs: 
+
+* [iOS Example App](https://rink.hockeyapp.net/manage/apps/285999/app_versions/4)
+* [Android Example App](https://rink.hockeyapp.net/apps/741e62bec0e0487eae3686e9b89f03a9)
+
+To get access to source and to integrate the SDKs please contact us to join the private beta.
+
+## Special request values
+
 When making a request for loan offers there are special dollar amounts that will change the behavior of the loan applications response state when you apply for the offer.
 
 Offer Request Amount | Loan Application State | Action(s)
