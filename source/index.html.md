@@ -32,7 +32,7 @@ The Link API is architected around REST, and uses HTTP response codes to indicat
 
 Below are downloadable example apps that use our SDKs: 
 
-* [iOS Example App](https://rink.hockeyapp.net/manage/apps/285999/app_versions/4)
+* [iOS Example App](https://rink.hockeyapp.net/apps/94be274769854f85b557eb417f15fa1a)
 * [Android Example App](https://rink.hockeyapp.net/apps/741e62bec0e0487eae3686e9b89f03a9)
 
 To get access to source and to integrate the SDKs please contact us to join the private beta.
