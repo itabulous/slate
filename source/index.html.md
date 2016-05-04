@@ -52,9 +52,10 @@ $2200 | PENDING_BORROWER_ACTION | TEXT
 $2300 | PENDING_BORROWER_ACTION | UPLOAD_PROOF_OF_ADDRESS
 $2400 | PENDING_BORROWER_ACTION | UPLOAD_PROOF_OF_ADDRESS, UPLOAD_PHOTO_ID, UPLOAD_BANK_STATEMENT
 $2,500 | APPLICATION_RECEIVED |
-$2,600 | No offers. | 
+$2,600 | No offers. |
 $2700 | Web application via redirect. |
 $3,000 | ERROR |
+Any other amount | PENDING_BORROWER_ACTION | AGREE_TERMS
 
 # Authentication
 
@@ -65,9 +66,9 @@ There are two types of authentication within the Link API:
 
 This section explains how to authenticate as a Link developer in order to create users, return offers, and submit applications on the Link network.
 
-Developer authentication is required to access any of the Link API endpoints, and each endpoint requires a `developer_id` be passed as a POST parameter with all requests.
+Developer authentication is required to create a user and a developer key must be passed in the POST. Create user will return a token that is bound to that user and will be used as an Auth Bearer header for all subsequent user requests.
 
-You can register for a developer ID [here](https:link.ledge.me/register).
+You can register for a developer key [here](https:link.ledge.me/register).
 
 #Users
 
@@ -96,7 +97,7 @@ curl -X POST https://link.ledge.me/user/create
     "street": "2633 Lincoln Blvd",
     "city": "Santa Monica"
     "zip_code": "90405",
-    "developer_id": 1,
+    "public_developer_key": "xo23uf3dn380c3nd38c"
 }'
 ```
 
@@ -127,7 +128,7 @@ apt|User's apartment or unit number<br>Example: #715
 city*|User's city<br>Example: Santa Monica
 state*|User's US State 2 letter abbreviation.<br>Example: CA
 zip_code*|User's ZIP or postal code (5 or 9 digits)<br>Example: 90405
-developer_id*|Developer's Link ID.  This cannot be changed once it has been set.
+public_developer_key*|Developer's Link key.  This cannot be changed once it has been set.
 
 ## Update User
 
@@ -181,7 +182,7 @@ curl -X POST https://link.ledge.me/user/update
 }
 ```
 
-Update current user's info.  In the default UI modules included in the Link SDK, this method is called when a user submits updates to their profile info after previously registering an account.  Please note that the developer ID associated with a user is set with the /user/create method and cannot subsequently be updated.
+Update current user's info.  In the default UI modules included in the Link SDK, this method is called when a user submits updates to their profile info after previously registering an account.  Please note that the developer key associated with a user is set with the /user/create method and cannot subsequently be updated.
 
 ### POST Parameters
 
