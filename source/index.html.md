@@ -101,81 +101,7 @@ curl -X POST https://link.ledge.me/config/loanPurposes
             "loan_purpose_id": 2,
             "description": "Home Improvement"
         },
-        {
-            "type": "loan_purpose",
-            "loan_purpose_id": 3,
-            "description": "Business"
-        },
-        {
-            "type": "loan_purpose",
-            "loan_purpose_id": 4,
-            "description": "Auto"
-        },
-        {
-            "type": "loan_purpose",
-            "loan_purpose_id": 5,
-            "description": "Other"
-        },
-        {
-            "type": "loan_purpose",
-            "loan_purpose_id": 6,
-            "description": "Baby"
-        },
-        {
-            "type": "loan_purpose",
-            "loan_purpose_id": 7,
-            "description": "Boat"
-        },
-        {
-            "type": "loan_purpose",
-            "loan_purpose_id": 8,
-            "description": "Cosmetic"
-        },
-        {
-            "type": "loan_purpose",
-            "loan_purpose_id": 9,
-            "description": "Green Loans"
-        },
-        {
-            "type": "loan_purpose",
-            "loan_purpose_id": 10,
-            "description": "Household Expense"
-        },
-        {
-            "type": "loan_purpose",
-            "loan_purpose_id": 11,
-            "description": "Large Purchase"
-        },
-        {
-            "type": "loan_purpose",
-            "loan_purpose_id": 12,
-            "description": "Medical/Dental"
-        },
-        {
-            "type": "loan_purpose",
-            "loan_purpose_id": 13,
-            "description": "Motorcycle"
-        },
-        {
-            "type": "loan_purpose",
-            "loan_purpose_id": 14,
-            "description": "RV"
-        },
-        {
-            "type": "loan_purpose",
-            "loan_purpose_id": 15,
-            "description": "Taxes"
-        },
-        {
-            "type": "loan_purpose",
-            "loan_purpose_id": 16,
-            "description": "Vacation"
-        },
-        {
-            "type": "loan_purpose",
-            "loan_purpose_id": 17,
-            "description": "Special Occasion"
-        }
+        ...
     ],
     "page": 0,
     "has_more": false,
@@ -210,21 +136,7 @@ curl -X POST https://link.ledge.me/config/housingTypes
             "housing_type_id": 1,
             "description": "Rent"
         },
-        {
-            "type": "housing_type",
-            "housing_type_id": 2,
-            "description": "Mortage"
-        },
-        {
-            "type": "housing_type",
-            "housing_type_id": 3,
-            "description": "Fully Own"
-        },
-        {
-            "type": "housing_type",
-            "housing_type_id": 0,
-            "description": "Other"
-        }
+        ...
     ],
     "page": 0,
     "has_more": false,
@@ -259,26 +171,7 @@ curl -X POST https://link.ledge.me/config/employmentStatuses
             "employment_status_id": 1,
             "description": "Employed"
         },
-        {
-            "type": "employment_status",
-            "employment_status_id": 2,
-            "description": null
-        },
-        {
-            "type": "employment_status",
-            "employment_status_id": 3,
-            "description": "Self Employed"
-        },
-        {
-            "type": "employment_status",
-            "employment_status_id": 4,
-            "description": "Military"
-        },
-        {
-            "type": "employment_status",
-            "employment_status_id": 5,
-            "description": "Reitred Benefits"
-        },
+        ...
         {
             "type": "employment_status",
             "employment_status_id": 0,
@@ -318,26 +211,7 @@ curl -X POST https://link.ledge.me/config/salaryFrequencies
             "salary_frequency_id": 1,
             "description": "Weekly"
         },
-        {
-            "type": "salary_frequency",
-            "salary_frequency_id": 2,
-            "description": "Bi Weekly"
-        },
-        {
-            "type": "salary_frequency",
-            "salary_frequency_id": 3,
-            "description": "Twice Monthly"
-        },
-        {
-            "type": "salary_frequency",
-            "salary_frequency_id": 4,
-            "description": "Monthly"
-        },
-        {
-            "type": "salary_frequency",
-            "salary_frequency_id": 5,
-            "description": "Yearly"
-        },
+        ...
         {
             "type": "salary_frequency",
             "salary_frequency_id": 0,
