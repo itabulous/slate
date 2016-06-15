@@ -372,7 +372,24 @@ curl -X POST https://link.ledge.me/config/disclaimerTexts
 > <h3 class="toc-ignore">Response:</h3>
 
 ```json
-{}
+{
+    "type": "list",
+    "data": [
+        {
+            "type": "integration_disclaimer",
+            "integration_id": 1,
+            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+        },
+        {
+            "type": "integration_disclaimer",
+            "integration_id": 2,
+            "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+        }
+    ],
+    "page": 0,
+    "has_more": false,
+    "total_count": 2
+}
 ```
 
 Fetch the legal disclaimer text to be able to display loan offers.
@@ -395,14 +412,17 @@ public_developer_key*|str
 curl -X POST https://link.ledge.me/config/linkDisclaimer
  -H "Content-Type: application/json"
  -d '{
-    "public_developer_key": ""
+    "public_developer_key": "asdasdpiuqweoiquwe786123="
 }'
 ```
 
 > <h3 class="toc-ignore">Response:</h3>
 
 ```json
-["link_disclaimer", "Link Disclosure"]
+{
+    "type": "link_disclaimer",
+    "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua"
+}
 ```
 
 Fetch the legal link disclaimer text to be able to start the flow.
@@ -443,6 +463,9 @@ curl -X POST https://link.ledge.me/user/create
     "public_developer_key": "xo23uf3dn380c3nd38c"
     "salary_frequency": "1",
     "monthly_net_income": "4000.01",
+    "housing_type": "1",
+    "employment_status": "1",
+    "salary_frequency": "1"
 }'
 ```
 
@@ -564,8 +587,7 @@ ssn|User's 9 Digit Social Security Number. XXX-XX-XXXX<br>Example: 123-45-6789
 email*|User's email address.<br>Example: developer@ledge.me
 phone_number*|User's Phone number in E164 format.<br>Example: +1 424-260-8561
 income*|User's annual pretax income expressed as a Numeric input truncated to two decimal places.<br>Example: 100000.001 would become 100000.00
-monthly_net_income*|User's monthly after tax income expressed as a Numeric input truncated to two decimal places.
-Example: 8000.001 would become 8000.00
+monthly_net_income*|User's monthly after tax income expressed as a Numeric input truncated to two decimal places.<br>Example: 8000.001 would become 8000.00
 credit_range*|1 = Excellent Credit (760+), 2 = Good Credit (700+), 3 = Fair Credit (640+), 4 = Poor Credit
 street*|User’s mailing address (street + street number)<br>Example: 2633 Lincoln Blvd
 apt|User's apartment or unit number<br>Example: #715
@@ -913,58 +935,14 @@ TEXT|Follow instructions in text, parse and url to make it clickable.
 
 > <h3 class="toc-ignore">Definition:</h3>
 
-> POST https://link.ledge.me/application/external/{application_code}
+> GET https://link.ledge.me/application/external/{application_code}
 
 > <h3 class="toc-ignore">Request:</h3>
 
 ```shell
-curl -X POST https://link.ledge.me/application/external/{application_code}
+curl -X GET https://link.ledge.me/application/external/{application_code}
  -H "Content-Type: application/json"
  -H "Authorization: Bearer {user_token}"
-```
-
-> <h3 class="toc-ignore">Response:</h3>
-
-```json
-{
-    "type": "application",
-    "id": 3666200658,
-    "status": "APPLICATION_RECEIVED",
-    "create_time": 1465986568,
-    "offer": {
-        "type": "offer",
-        "id": 3235413444,
-        "lender": {
-            "type": "lender",
-            "lender_name": "Avant",
-            "small_image": "http://img.com/asd",
-            "large_image": "http://img.com/asdoiu",
-            "about": "Lorem Ipsum"
-        },
-        "currency": "USD",
-        "loan_amount": 2500.01,
-        "payment_amount": 264.53,
-        "interest_rate": 6.0,
-        "payment_count": 10,
-        "term": {
-            "type": "term",
-            "duration": 10,
-            "unit": 2
-        },
-        "expiration_date": 1466159368,
-        "application_method": "api",
-        "application_code": null,
-        "offer_details": "offer_details"
-    },
-    "status_message": "Avant is processing your application.",
-    "required_actions": {
-        "type": "list",
-        "data": [],
-        "page": 0,
-        "has_more": false,
-        "total_count": 0
-    }
-}
 ```
 
 Create a loan application for a previously received offer. The user will be redirected to the lender's application page.
